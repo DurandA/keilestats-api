@@ -22,7 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ch.keilestats.api.application.entities.Game;
 import ch.keilestats.api.application.repositories.GameRepository;
 
-/*Class to handle calls on Game-Ressources*/
+/*Class to handle calls on Game-Resources*/
 @RestController
 @RequestMapping("/api")
 public class GameController {
