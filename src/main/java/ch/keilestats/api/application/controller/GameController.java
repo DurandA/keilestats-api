@@ -50,8 +50,9 @@ public class GameController {
 	public void deleteGame(@PathVariable Long gameId) {
 		gameRepository.deleteById(gameId);
 	}
-	
-	// Returning a ResponseEntity with a header containing the URL of the created resource
+
+	// The Method returns a ResponseEntity with a header containing the URI of the created
+	// resource
 	@PostMapping(path = "/games", consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Object> addGame(@RequestBody Game game) {
 
@@ -62,7 +63,8 @@ public class GameController {
 
 		return ResponseEntity.created(location).build();
 	}
-
+	
+	// "ResponseEntity" used to return http-StatusCodes
 	@PutMapping("/games/{gameId}")
 	public ResponseEntity<Object> updateGame(@RequestBody Game game, @PathVariable Long gameId) {
 		Optional<Game> gameOptional = gameRepository.findById(gameId);

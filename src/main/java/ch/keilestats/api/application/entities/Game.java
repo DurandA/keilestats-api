@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Game")
@@ -28,16 +30,16 @@ public class Game {
 	private long gameId;
 	private String gameDate;
 	@OneToMany(mappedBy="game")
-	@JsonBackReference
+	@JsonManagedReference(value = "game-goalsKeile")
 	private List<Goal> goalsKeile = new ArrayList<>();
 	@Column(name="goals_keile")
 	private int nbGoalsKeile = goalsKeile.size();
 	private int goalsOpponent;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "OPPONENT_ID")
 	private Opponent opponent;
 	@ManyToMany(mappedBy="games")
-	@JsonIgnore
+	@JsonBackReference(value= "player-games")
 	private List<Player> players = new ArrayList<>();
 
 	//void constructor needed by Spring

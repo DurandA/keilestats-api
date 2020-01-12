@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /*
  * Nur "Player" machen und im "Player Repository, die methode, die nur den namen zurückgibt "returnNameOnly, so etwas)
@@ -35,16 +36,15 @@ public class Player {
 	private String phone;
 	@ManyToMany
 	@JoinTable(name = "PLAYED_GAME", joinColumns = @JoinColumn(name = "PLAYER_ID"), inverseJoinColumns = @JoinColumn(name = "GAME_ID"))
-	@JsonBackReference
 	private List<Game> games = new ArrayList<>();
 	@OneToMany(mappedBy = "goalScorer")
-	@JsonBackReference
+	@JsonManagedReference(value = "player-goalScorer")
 	private List<Goal> goalsScored = new ArrayList<>();
 	@OneToMany(mappedBy = "firstAssistant")
-	@JsonBackReference
+	@JsonManagedReference(value = "player-firstAssistant")
 	private List<Goal> firstAssists = new ArrayList<>();
 	@OneToMany(mappedBy = "secondAssistant")
-	@JsonBackReference
+	@JsonManagedReference(value = "player-secondAssistant")
 	private List<Goal> secondAssists = new ArrayList<>();
 
 	// void constructor needed by Spring boot
