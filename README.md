@@ -7,6 +7,6 @@ REST API for Statistics of a just-for-fun ice hockey team with Spring Boot.
 4. For this project, a postgres database is used.
 5. Launch the server by running the class KeileStatsApplication in folder 
 src/main/java
-6. To test the endpoints, especially the put and post methods, data in json format, that can be put in the request body will be provided.
+6. To test the endpoints, especially the put and post methods, data in json format that can be put in the request body, will be provided.
 
 
