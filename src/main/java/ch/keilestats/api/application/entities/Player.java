@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Player {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long playerId;
 	private String lastname;
 	private String firstname;
