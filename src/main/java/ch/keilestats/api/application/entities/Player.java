@@ -38,13 +38,13 @@ public class Player {
 	@JoinTable(name = "PLAYED_GAME", joinColumns = @JoinColumn(name = "PLAYER_ID"), inverseJoinColumns = @JoinColumn(name = "GAME_ID"))
 	private List<Game> games = new ArrayList<>();
 	@OneToMany(mappedBy = "goalScorer")
-	@JsonManagedReference(value = "player-goalScorer")
+	@JsonBackReference(value = "player-goalScorer")
 	private List<Goal> goalsScored = new ArrayList<>();
 	@OneToMany(mappedBy = "firstAssistant")
-	@JsonManagedReference(value = "player-firstAssistant")
+	@JsonBackReference(value = "player-firstAssistant")
 	private List<Goal> firstAssists = new ArrayList<>();
 	@OneToMany(mappedBy = "secondAssistant")
-	@JsonManagedReference(value = "player-secondAssistant")
+	@JsonBackReference(value = "player-secondAssistant")
 	private List<Goal> secondAssists = new ArrayList<>();
 
 	// void constructor needed by Spring boot

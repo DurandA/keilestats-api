@@ -54,7 +54,7 @@ public class OpponentController {
 	}
 	
 	@PostMapping(path = "/opponents")
-	public ResponseEntity<Object> addOpponent(@RequestBody Opponent opponent) {
+	public ResponseEntity<Object> addOpponent(Opponent opponent) {
 
 		Opponent savedOpponent = opponentRepository.save(opponent);
 
@@ -65,7 +65,7 @@ public class OpponentController {
 	}
 	
 	@PutMapping(path = "/opponents/{opponentId}")
-	public ResponseEntity<Object> updateOpponent(@RequestBody Opponent opponent, @PathVariable Long opponentId) {
+	public ResponseEntity<Object> updateOpponent( Opponent opponent, @PathVariable Long opponentId) {
 		Optional<Opponent> opponentOptional = opponentRepository.findById(opponentId);
 		
 		if (!opponentOptional.isPresent())

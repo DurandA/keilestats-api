@@ -56,7 +56,7 @@ public class GoalController {
 	// Returning a ResponseEntity with a header containing the URL of the created
 	// resource
 	@PostMapping(path = "/goals", consumes = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Object> addGoal(@RequestBody Goal goal) {
+	public ResponseEntity<Object> addGoal(Goal goal) {
 
 		Goal savedGoal = goalRepository.save(goal);
 
@@ -67,7 +67,7 @@ public class GoalController {
 	}
 
 	@PutMapping("/goals/{goalsId}")
-	public ResponseEntity<Object> updatePlayer(@RequestBody Goal goal, @PathVariable Long goalId) {
+	public ResponseEntity<Object> updatePlayer(Goal goal, @PathVariable Long goalId) {
 		Optional<Goal> goalOptional = goalRepository.findById(goalId);
 
 		if (!goalOptional.isPresent())

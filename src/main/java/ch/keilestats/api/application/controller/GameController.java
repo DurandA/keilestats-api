@@ -54,7 +54,7 @@ public class GameController {
 	// The Method returns a ResponseEntity with a header containing the URI of the created
 	// resource
 	@PostMapping(path = "/games", consumes = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<Object> addGame(@RequestBody Game game) {
+	public ResponseEntity<Object> addGame(Game game) {
 
 		Game savedGame = gameRepository.save(game);
 
@@ -66,7 +66,7 @@ public class GameController {
 	
 	// "ResponseEntity" used to return http-StatusCodes
 	@PutMapping("/games/{gameId}")
-	public ResponseEntity<Object> updateGame(@RequestBody Game game, @PathVariable Long gameId) {
+	public ResponseEntity<Object> updateGame(Game game, @PathVariable Long gameId) {
 		Optional<Game> gameOptional = gameRepository.findById(gameId);
 
 		if (!gameOptional.isPresent())

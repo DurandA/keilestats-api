@@ -32,12 +32,19 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework.restdocs/spring-restdocs-mockmvc -->
+<dependency>
+    <groupId>org.springframework.restdocs</groupId>
+    <artifactId>spring-restdocs-mockmvc</artifactId>
+    <version>2.0.4.RELEASE</version>
+    <scope>test</scope>
+</dependency>
 
 <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
 		<dependency>
     		<groupId>org.postgresql</groupId>
     		<artifactId>postgresql</artifactId>
-    		<version>42.2.8</version>
 		</dependency>
 		
 <!-- Spring Boot developper tools. such as automatic restart of server when classes change -->
@@ -51,21 +58,32 @@
 		<dependency>
     		<groupId>org.hibernate</groupId>
     		<artifactId>hibernate-entitymanager</artifactId>
-    		<version>5.4.8.Final</version>
 		</dependency>
 
 <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 		<dependency>
     		<groupId>org.hibernate</groupId>
     		<artifactId>hibernate-core</artifactId>
-    		<version>5.4.8.Final</version>
 		</dependency>
+
+<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger2</artifactId>
+    <version>2.9.2</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger-ui</artifactId>
+    <version>2.9.2</version>
+</dependency>
 
 <!-- Project Lombok dependency -->		
 	<dependency>
 		<groupId>org.projectlombok</groupId>
 		<artifactId>lombok</artifactId>
-		<version>1.16.16</version>
 		<scope>provided</scope>
 	</dependency>
 

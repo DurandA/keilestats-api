@@ -22,19 +22,19 @@ public class Goal {
 	private long goalId;
 	@ManyToOne
 	@JoinColumn(name="GAME_ID")
-	@JsonBackReference(value = "game-goalsKeile")
+	@JsonManagedReference(value = "game-goalsKeile")
 	private Game game;
 	@ManyToOne
 	@JoinColumn(name="SCORER_ID")
-	@JsonBackReference(value = "player-goalScorer")
+	@JsonManagedReference(value = "player-goalScorer")
 	private Player goalScorer;
 	@ManyToOne
 	@JoinColumn(name="ASSISTANT1_ID")
-	@JsonBackReference(value = "player-firstAssistant")
+	@JsonManagedReference(value = "player-firstAssistant")
 	private Player firstAssistant;
 	@ManyToOne
 	@JoinColumn(name="ASSISTANT2_ID")
-	@JsonBackReference(value = "player-secondAssistant")
+	@JsonManagedReference(value = "player-secondAssistant")
 	private Player secondAssistant;
 
 	//Empty Constructor needed by Spring Boot for dependency injection

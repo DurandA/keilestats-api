@@ -7,15 +7,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-import javax.el.PropertyNotFoundException;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,18 +18,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-@RestController
-@RequestMapping("/api")
+@RestController /*tells spring that this is a component 
+and Responses should be written directly in the HTTP-Response-Body*/
+@RequestMapping("/api") /* */
 @Transactional
 public class PlayerController {
 
-	// This Annotation is necessary for that Spring Boot instantiates the Repository
-	// automatically
-	@Autowired
+	
+	@Autowired /*Annotation to tell the Framework to inject the dependency*/
 	private PlayerRepository playerRepository;
 
 	// Return list of all players
@@ -55,15 +47,13 @@ public class PlayerController {
 	public Player getAllPlayerById(@PathVariable Long playerId) {
 
 		Optional<Player> player = playerRepository.findById(playerId);
-		if (!player.isPresent())
-			throw new PropertyNotFoundException("id-" + playerId);
 		return player.get();
 	}
 
 	// Returning a ResponseEntity with a header containing the URL of the created
 	// resource
-	@PostMapping(path = "/players", consumes = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<Object> addPlayer(@RequestBody Player player) {
+	@PostMapping(path = "/players")
+	public ResponseEntity<Object> addPlayer(Player player) {
 
 		Player savedPlayer = playerRepository.save(player);
 

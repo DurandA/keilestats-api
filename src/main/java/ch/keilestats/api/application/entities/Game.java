@@ -30,7 +30,7 @@ public class Game {
 	private long gameId;
 	private String gameDate;
 	@OneToMany(mappedBy="game")
-	@JsonManagedReference(value = "game-goalsKeile")
+	@JsonBackReference(value = "game-goalsKeile")
 	private List<Goal> goalsKeile = new ArrayList<>();
 	@Column(name="goals_keile")
 	private int nbGoalsKeile = goalsKeile.size();
