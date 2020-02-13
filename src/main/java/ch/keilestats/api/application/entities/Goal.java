@@ -37,7 +37,7 @@ public class Goal {
 	@JsonManagedReference(value = "player-secondAssistant")
 	private Player secondAssistant;
 
-	//Empty Constructor needed by Spring Boot for dependency injection
+	//Empty Constructor needed by Spring Boot for dependency injection and Hibernate
 	public Goal() {};
 
 	public Goal(Player scorer) {

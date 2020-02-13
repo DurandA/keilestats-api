@@ -42,7 +42,7 @@ public class Game {
 	@JsonBackReference(value= "player-games")
 	private List<Player> players = new ArrayList<>();
 
-	//void constructor needed by Spring
+
 	public Game() {}
 
 	public Game(String gameDate, List<Goal> goalsKeile, int goalsOpponent, Opponent opponent) {
