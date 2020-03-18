@@ -1,4 +1,4 @@
-package ch.keilestats.api.repositories;
+package ch.keilestats.api;
 
 import static org.junit.jupiter.api.Assertions.*;
 

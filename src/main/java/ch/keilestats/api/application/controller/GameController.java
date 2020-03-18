@@ -38,7 +38,7 @@ public class GameController {
 
 	// Return values of one game
 	@GetMapping("/games/{gameId}")
-	public Game getAllPlayerById(@PathVariable Long gameId) {
+	public Game getAllPlayerById(@PathVariable("gameId") Long gameId) {
 
 		Optional<Game> gameOptional = gameRepository.findById(gameId);
 		if (!gameOptional.isPresent())
@@ -47,7 +47,7 @@ public class GameController {
 	}
 
 	@DeleteMapping("/games/{gameId}")
-	public void deleteGame(@PathVariable Long gameId) {
+	public void deleteGame(@PathVariable("gameId") Long gameId) {
 		gameRepository.deleteById(gameId);
 	}
 
@@ -66,7 +66,7 @@ public class GameController {
 	
 	// "ResponseEntity" used to return http-StatusCodes
 	@PutMapping("/games/{gameId}")
-	public ResponseEntity<Object> updateGame(Game game, @PathVariable Long gameId) {
+	public ResponseEntity<Object> updateGame(Game game, @PathVariable("gameId") Long gameId) {
 		Optional<Game> gameOptional = gameRepository.findById(gameId);
 
 		if (!gameOptional.isPresent())

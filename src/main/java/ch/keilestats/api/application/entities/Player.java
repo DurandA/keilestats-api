@@ -37,7 +37,7 @@ public class Player {
 	@ManyToMany
 	@JoinTable(name = "PLAYED_GAME", joinColumns = @JoinColumn(name = "PLAYER_ID"), inverseJoinColumns = @JoinColumn(name = "GAME_ID"))
 	private List<Game> games = new ArrayList<>();
-	@OneToMany(mappedBy = "goalScorer")
+	@OneToMany(mappedBy = "goalScorer") //Join column, join table fehlen?..
 	@JsonBackReference(value = "player-goalScorer")
 	private List<Goal> goalsScored = new ArrayList<>();
 	@OneToMany(mappedBy = "firstAssistant")
@@ -55,6 +55,19 @@ public class Player {
 
 		this.lastname = lastname;
 		this.firstname = firstname;
+	}
+	
+
+	public Player(long playerId, String lastname, String firstname, String position, String email, String address,
+			String phone) {
+		super();
+		this.playerId = playerId;
+		this.lastname = lastname;
+		this.firstname = firstname;
+		this.position = position;
+		this.email = email;
+		this.address = address;
+		this.phone = phone;
 	}
 
 	public long getPlayerId() {
@@ -131,10 +144,12 @@ public class Player {
 
 	public void addGoal(Goal goal) {
 		this.goalsScored.add(goal);
+		goal.setGoalScorer(this);
 	}
 
-	public void removeGame(Goal goal) {
+	public void removeGoal(Goal goal) {
 		this.goalsScored.remove(goal);
+		goal.setGoalScorer(null);
 	}
 
 	public List<Goal> getFirstAssists() {
@@ -143,10 +158,12 @@ public class Player {
 
 	public void addFirstAssists(Goal goal) {
 		this.firstAssists.add(goal);
+		goal.setFirstAssistant(this);
 	}
 
 	public void removeFirstAssists(Goal goal) {
 		this.firstAssists.remove(goal);
+		goal.setFirstAssistant(null);
 	}
 
 	public List<Goal> getSecondAssists() {
@@ -155,10 +172,12 @@ public class Player {
 
 	public void addSecondAssists(Goal goal) {
 		this.secondAssists.add(goal);
+		goal.setSecondAssistant(this);
 	}
 
 	public void removeSecondAssists(Goal goal) {
 		this.secondAssists.remove(goal);
+		goal.setSecondAssistant(null);
 	}
 
 	@Override

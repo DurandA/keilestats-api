@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,13 +30,13 @@ public class Game {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long gameId;
 	private String gameDate;
-	@OneToMany(mappedBy="game")
+	@OneToMany(mappedBy="game", orphanRemoval=true, cascade = CascadeType.ALL)
 	@JsonBackReference(value = "game-goalsKeile")
 	private List<Goal> goalsKeile = new ArrayList<>();
 	@Column(name="goals_keile")
 	private int nbGoalsKeile = goalsKeile.size();
 	private int goalsOpponent;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "OPPONENT_ID")
 	private Opponent opponent;
 	@ManyToMany(mappedBy="games")
@@ -44,26 +45,19 @@ public class Game {
 
 
 	public Game() {}
-
-	public Game(String gameDate, List<Goal> goalsKeile, int goalsOpponent, Opponent opponent) {
-		
-		this.gameDate = gameDate;
-		this.goalsKeile = goalsKeile;
-		this.goalsOpponent = goalsOpponent;
-		this.opponent = opponent;
-	}
 	
-	//Constructor with List of Players
-	public Game(String gameDate, List<Goal> goalsKeile, int goalsOpponent, Opponent opponent,
-			 List<Player> players) {
-		
+	public Game(long gameId, String gameDate, List<Goal> goalsKeile, int nbGoalsKeile, int goalsOpponent,
+			Opponent opponent, List<Player> players) {
+		super();
+		this.gameId = gameId;
 		this.gameDate = gameDate;
 		this.goalsKeile = goalsKeile;
+		this.nbGoalsKeile = nbGoalsKeile;
 		this.goalsOpponent = goalsOpponent;
 		this.opponent = opponent;
 		this.players = players;
 	}
-	
+
 	public long getGameId() {
 		return gameId;
 	}
@@ -86,10 +80,12 @@ public class Game {
 
 	public void addGoalKeile(Goal goal) {
 		this.goalsKeile.add(goal);
+		goal.setGame(this);
 	}
 	
 	public void removeGoalKeile(Goal goal) {
 		this.goalsKeile.remove(goal);
+		goal.setGame(null);
 	}
 
 	public int getGoalsOpponent() {

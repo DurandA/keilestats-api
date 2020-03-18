@@ -21,7 +21,7 @@ public class Opponent {
 	private long opponentId;
 	private String opponentName;
 	@OneToMany(mappedBy="opponent")
-	@JsonIgnore
+	//@JsonIgnore
 	private List<Game> games = new ArrayList<>();
 
 	//Void constructor needed by Spring Boot
@@ -55,10 +55,12 @@ public class Opponent {
 	
 	public void addGame(Game game) {
 		this.games.add(game);
+		game.setOpponent(this);
 	}
 	
 	public void removeGame(Game game) {
 		this.games.remove(game);
+		game.setOpponent(null);
 	}
 
 	@Override

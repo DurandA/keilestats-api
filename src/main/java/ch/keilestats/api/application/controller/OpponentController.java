@@ -40,7 +40,7 @@ public class OpponentController {
 
 	// Return values of one opponent
 	@GetMapping("/opponents/{opponentId}")
-	public Opponent getOpponentById(@PathVariable Long opponentId) {
+	public Opponent getOpponentById(@PathVariable("opponentId") Long opponentId) {
 
 		Optional<Opponent> opponentOptional = opponentRepository.findById(opponentId);
 		if (!opponentOptional.isPresent())
@@ -49,7 +49,7 @@ public class OpponentController {
 	}
 	
 	@DeleteMapping("/opponents/{opponentId}")
-	public void deleteOpponent(@PathVariable Long opponentId) {
+	public void deleteOpponent(@PathVariable("opponentId") Long opponentId) {
 		opponentRepository.deleteById(opponentId);
 	}
 	
@@ -65,7 +65,7 @@ public class OpponentController {
 	}
 	
 	@PutMapping(path = "/opponents/{opponentId}")
-	public ResponseEntity<Object> updateOpponent( Opponent opponent, @PathVariable Long opponentId) {
+	public ResponseEntity<Object> updateOpponent( Opponent opponent, @PathVariable("opponentId") Long opponentId) {
 		Optional<Opponent> opponentOptional = opponentRepository.findById(opponentId);
 		
 		if (!opponentOptional.isPresent())

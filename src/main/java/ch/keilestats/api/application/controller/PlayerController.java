@@ -38,13 +38,13 @@ public class PlayerController {
 	}
 
 	@DeleteMapping("/players/{playerId}")
-	public void deletePlayer(@PathVariable Long playerId) {
+	public void deletePlayer(@PathVariable("playerId") Long playerId) {
 		playerRepository.deleteById(playerId);
 	}
 
 	// Return values of one Player
 	@GetMapping("/players/{playerId}")
-	public Player getAllPlayerById(@PathVariable Long playerId) {
+	public Player getAllPlayerById(@PathVariable("playerId") Long playerId) {
 
 		Optional<Player> player = playerRepository.findById(playerId);
 		return player.get();
@@ -65,7 +65,7 @@ public class PlayerController {
 
 
 	@PutMapping("/players/{playerId}")
-	public ResponseEntity<Object> updatePlayer(@RequestBody Player player, @PathVariable Long id) {
+	public ResponseEntity<Object> updatePlayer(Player player, @PathVariable("playerId") Long id) {
 		Optional<Player> playerOptional = playerRepository.findById(id);
 		
 		if (!playerOptional.isPresent())
