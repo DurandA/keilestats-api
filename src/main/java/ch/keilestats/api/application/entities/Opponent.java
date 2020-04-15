@@ -1,7 +1,9 @@
 package ch.keilestats.api.application.entities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,13 +24,14 @@ public class Opponent {
 	private String opponentName;
 	@OneToMany(mappedBy="opponent")
 	//@JsonIgnore
-	private List<Game> games = new ArrayList<>();
+	private Set<Game> games = new HashSet<>();
 
 	//Void constructor needed by Spring Boot
 	public Opponent(){}
 	
-	public Opponent(String name) {
+	public Opponent(String name, Set<Game> games) {
 		this.opponentName = name;
+		this.games = games;
 	}
 
 
@@ -49,11 +52,17 @@ public class Opponent {
 	}
 
 	
-	public List<Game> getGames() {
+	public Set<Game> getGames() {
 		return games;
 	}
 	
+	private void setGames(Set<Game> games) {
+		this.games = games;
+	}
+	
 	public void addGame(Game game) {
+		if (game == null)
+			throw new IllegalArgumentException("Null Game");
 		this.games.add(game);
 		game.setOpponent(this);
 	}

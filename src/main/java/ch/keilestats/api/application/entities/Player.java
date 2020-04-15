@@ -1,7 +1,9 @@
 package ch.keilestats.api.application.entities;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,16 +38,16 @@ public class Player {
 	private String phone;
 	@ManyToMany
 	@JoinTable(name = "PLAYED_GAME", joinColumns = @JoinColumn(name = "PLAYER_ID"), inverseJoinColumns = @JoinColumn(name = "GAME_ID"))
-	private List<Game> games = new ArrayList<>();
+	private Set<Game> games = new HashSet<>();
 	@OneToMany(mappedBy = "goalScorer") //Join column, join table fehlen?..
 	@JsonBackReference(value = "player-goalScorer")
-	private List<Goal> goalsScored = new ArrayList<>();
+	private Set<Goal> goalsScored = new HashSet<>();
 	@OneToMany(mappedBy = "firstAssistant")
 	@JsonBackReference(value = "player-firstAssistant")
-	private List<Goal> firstAssists = new ArrayList<>();
+	private Set<Goal> firstAssists = new HashSet<>();
 	@OneToMany(mappedBy = "secondAssistant")
 	@JsonBackReference(value = "player-secondAssistant")
-	private List<Goal> secondAssists = new ArrayList<>();
+	private Set<Goal> secondAssists = new HashSet<>();
 
 	// void constructor needed by Spring boot
 	public Player() {
@@ -58,16 +60,19 @@ public class Player {
 	}
 	
 
-	public Player(long playerId, String lastname, String firstname, String position, String email, String address,
-			String phone) {
+	public Player(String lastname, String firstname, String position, String email, String address, String phone,
+			Set<Game> games, Set<Goal> goalsScored, Set<Goal> firstAssists, Set<Goal> secondAssists) {
 		super();
-		this.playerId = playerId;
 		this.lastname = lastname;
 		this.firstname = firstname;
 		this.position = position;
 		this.email = email;
 		this.address = address;
 		this.phone = phone;
+		this.games = games;
+		this.goalsScored = goalsScored;
+		this.firstAssists = firstAssists;
+		this.secondAssists = secondAssists;
 	}
 
 	public long getPlayerId() {
@@ -126,23 +131,37 @@ public class Player {
 		this.address = address;
 	}
 
-	public List<Game> getGames() {
+	public Set<Game> getGames() {
 		return games;
+	}
+	
+	public void setGames(Set<Game> games) {
+		this.games = games;
 	}
 
 	public void addGame(Game game) {
+		if(game == null) 
+			throw new IllegalArgumentException("Null Game");
 		this.games.add(game);
+		game.getPlayers().add(this);
 	}
 
 	public void removeGame(Game game) {
 		this.games.remove(game);
+		game.getPlayers().remove(this);
 	}
 
-	public List<Goal> getGoalsScored() {
+	public Set<Goal> getGoalsScored() {
 		return goalsScored;
+	}
+	
+	public void setGoalsScored(Set<Goal> goalsScored) {
+		this.goalsScored = goalsScored;
 	}
 
 	public void addGoal(Goal goal) {
+		if (goal == null)
+			throw new IllegalArgumentException("Null Goal");
 		this.goalsScored.add(goal);
 		goal.setGoalScorer(this);
 	}
@@ -152,11 +171,17 @@ public class Player {
 		goal.setGoalScorer(null);
 	}
 
-	public List<Goal> getFirstAssists() {
+	public Set<Goal> getFirstAssists() {
 		return firstAssists;
+	}
+	
+	public void setFirstAssists(Set<Goal> firstAssists) {
+		this.firstAssists = firstAssists; 
 	}
 
 	public void addFirstAssists(Goal goal) {
+		if(goal == null)
+			throw new IllegalArgumentException("Null Goal");
 		this.firstAssists.add(goal);
 		goal.setFirstAssistant(this);
 	}
@@ -166,8 +191,12 @@ public class Player {
 		goal.setFirstAssistant(null);
 	}
 
-	public List<Goal> getSecondAssists() {
+	public Set<Goal> getSecondAssists() {
 		return secondAssists;
+	}
+	
+	public void setSecondAssists(Set<Goal> secondAssists) {
+		this.secondAssists = secondAssists;
 	}
 
 	public void addSecondAssists(Goal goal) {

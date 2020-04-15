@@ -1,8 +1,9 @@
 package ch.keilestats.api.application.entities;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,9 +31,8 @@ public class Game {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long gameId;
 	private String gameDate;
-	@OneToMany(mappedBy="game", orphanRemoval=true, cascade = CascadeType.ALL)
-	@JsonBackReference(value = "game-goalsKeile")
-	private List<Goal> goalsKeile = new ArrayList<>();
+	@OneToMany(mappedBy="game", cascade = CascadeType.ALL)
+	private Set<Goal> goalsKeile = new HashSet<>();
 	@Column(name="goals_keile")
 	private int nbGoalsKeile = goalsKeile.size();
 	private int goalsOpponent;
@@ -40,14 +40,14 @@ public class Game {
 	@JoinColumn(name = "OPPONENT_ID")
 	private Opponent opponent;
 	@ManyToMany(mappedBy="games")
-	@JsonBackReference(value= "player-games")
-	private List<Player> players = new ArrayList<>();
+	@JsonBackReference(value="player-games")
+	private Set<Player> players = new HashSet<>();
 
 
 	public Game() {}
 	
-	public Game(long gameId, String gameDate, List<Goal> goalsKeile, int nbGoalsKeile, int goalsOpponent,
-			Opponent opponent, List<Player> players) {
+	public Game(long gameId, String gameDate, Set<Goal> goalsKeile, int nbGoalsKeile, int goalsOpponent,
+			Opponent opponent, Set<Player> players) {
 		super();
 		this.gameId = gameId;
 		this.gameDate = gameDate;
@@ -74,11 +74,17 @@ public class Game {
 		this.gameDate = date;
 	}
 
-	public List<Goal> getGoalsKeile() {
+	public Set<Goal> getGoalsKeile() {
 		return goalsKeile;
+	}
+	
+	public void setGoalsKeile(Set<Goal> goals) {
+		this.goalsKeile = goals;
 	}
 
 	public void addGoalKeile(Goal goal) {
+		if(goal == null)
+			throw new IllegalArgumentException("Null Goal");
 		this.goalsKeile.add(goal);
 		goal.setGame(this);
 	}
@@ -106,7 +112,7 @@ public class Game {
 	}
 
 	
-	public List<Player> getPlayers() {
+	public Set<Player> getPlayers() {
 		return players;
 	}
 	

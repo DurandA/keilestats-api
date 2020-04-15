@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.el.PropertyNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,20 +31,25 @@ public class GameController {
 	@Autowired
 	private GameRepository gameRepository;
 
+	
+	
 	// Return list of all games
 	@GetMapping("/games")
 	public List<Game> getAllGames() {
 		return gameRepository.findAll();
 	}
 
-	// Return values of one game
+	// Returns a HTTP-Response Entity with the Game and Status "OK", if Game is present 
+	//and null and Status NOT FOUND, if not
 	@GetMapping("/games/{gameId}")
-	public Game getAllPlayerById(@PathVariable("gameId") Long gameId) {
+	public ResponseEntity<Game> getAllPlayerById(@PathVariable("gameId") Long gameId) {
 
-		Optional<Game> gameOptional = gameRepository.findById(gameId);
-		if (!gameOptional.isPresent())
-			throw new PropertyNotFoundException("id-" + gameId);
-		return gameOptional.get();
+		Optional<Game> optionalGame = gameRepository.findById(gameId);
+		if (optionalGame.isPresent()) {
+			return new ResponseEntity<>(optionalGame.get(), HttpStatus.OK);	
+		}
+		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			
 	}
 
 	@DeleteMapping("/games/{gameId}")

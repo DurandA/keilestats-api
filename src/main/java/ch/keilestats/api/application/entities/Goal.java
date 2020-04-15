@@ -22,7 +22,6 @@ public class Goal {
 	private long goalId;
 	@ManyToOne
 	@JoinColumn(name="GAME_ID")
-	@JsonManagedReference(value = "game-goalsKeile")
 	private Game game;
 	@ManyToOne
 	@JoinColumn(name="SCORER_ID")
