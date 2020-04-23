@@ -36,7 +36,7 @@ public class Game {
 	@Column(name="goals_keile")
 	private int nbGoalsKeile = goalsKeile.size();
 	private int goalsOpponent;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "OPPONENT_ID")
 	private Opponent opponent;
 	@ManyToMany(mappedBy="games")

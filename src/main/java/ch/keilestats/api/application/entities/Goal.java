@@ -21,18 +21,14 @@ public class Goal {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long goalId;
 	@ManyToOne
-	@JoinColumn(name="GAME_ID")
 	private Game game;
 	@ManyToOne
-	@JoinColumn(name="SCORER_ID")
 	@JsonManagedReference(value = "player-goalScorer")
 	private Player goalScorer;
 	@ManyToOne
-	@JoinColumn(name="ASSISTANT1_ID")
 	@JsonManagedReference(value = "player-firstAssistant")
 	private Player firstAssistant;
 	@ManyToOne
-	@JoinColumn(name="ASSISTANT2_ID")
 	@JsonManagedReference(value = "player-secondAssistant")
 	private Player secondAssistant;
 
