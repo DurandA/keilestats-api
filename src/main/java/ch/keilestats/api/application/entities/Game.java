@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,15 +31,19 @@ public class Game {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long gameId;
+	
 	private String gameDate;
-	@OneToMany(mappedBy="game", cascade = CascadeType.ALL)
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "game", fetch = FetchType.LAZY)
 	private Set<Goal> goalsKeile = new HashSet<>();
-	@Column(name="goals_keile")
+	
 	private int nbGoalsKeile = goalsKeile.size();
+	
 	private int goalsOpponent;
+	
 	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn(name = "OPPONENT_ID")
 	private Opponent opponent;
+	
 	@ManyToMany(mappedBy="games")
 	@JsonBackReference(value="player-games")
 	private Set<Player> players = new HashSet<>();
@@ -52,7 +57,7 @@ public class Game {
 		this.gameId = gameId;
 		this.gameDate = gameDate;
 		this.goalsKeile = goalsKeile;
-		this.nbGoalsKeile = nbGoalsKeile;
+		this.setNbGoalsKeile(nbGoalsKeile);
 		this.goalsOpponent = goalsOpponent;
 		this.opponent = opponent;
 		this.players = players;
@@ -128,5 +133,13 @@ public class Game {
 	public String toString() {
 		return "Game [gameId=" + gameId + ", gameDate=" + gameDate + ", goals_keile=" + goalsKeile
 				+ ", goals_opponent=" + goalsOpponent + ", opponent=" + opponent + ", players=" + players + "]";
+	}
+
+	public int getNbGoalsKeile() {
+		return nbGoalsKeile;
+	}
+
+	public void setNbGoalsKeile(int nbGoalsKeile) {
+		this.nbGoalsKeile = nbGoalsKeile;
 	}
 }

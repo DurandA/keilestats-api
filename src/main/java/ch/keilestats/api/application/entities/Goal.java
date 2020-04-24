@@ -2,12 +2,14 @@ package ch.keilestats.api.application.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,6 +23,7 @@ public class Goal {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long goalId;
 	@ManyToOne
+	@JoinColumn(name = "gameId")
 	private Game game;
 	@ManyToOne
 	@JsonManagedReference(value = "player-goalScorer")

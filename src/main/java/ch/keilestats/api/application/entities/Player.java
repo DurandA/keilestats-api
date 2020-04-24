@@ -37,7 +37,6 @@ public class Player {
 	private String address;
 	private String phone;
 	@ManyToMany
-	@JoinTable(name = "PLAYED_GAME", joinColumns = @JoinColumn(name = "PLAYER_ID"), inverseJoinColumns = @JoinColumn(name = "GAME_ID"))
 	private Set<Game> games = new HashSet<>();
 	@OneToMany(mappedBy = "goalScorer") //Join column, join table fehlen?..
 	@JsonBackReference(value = "player-goalScorer")
