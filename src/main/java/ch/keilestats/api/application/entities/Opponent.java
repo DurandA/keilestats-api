@@ -20,8 +20,10 @@ public class Opponent {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long opponentId;
+	private Long opponentId;
+	
 	private String opponentName;
+	
 	@OneToMany(mappedBy="opponent")
 	//@JsonIgnore
 	private Set<Game> games = new HashSet<>();
@@ -30,8 +32,8 @@ public class Opponent {
 	public Opponent(){}
 	
 	public Opponent(String name, Set<Game> games) {
-		this.opponentName = name;
-		this.games = games;
+		this.setOpponentName(name);
+		this.setGames(games);
 	}
 
 
@@ -57,7 +59,7 @@ public class Opponent {
 	}
 	
 	private void setGames(Set<Game> games) {
-		this.games = games;
+		for (Game g : games) addGame(g);
 	}
 	
 	public void addGame(Game game) {

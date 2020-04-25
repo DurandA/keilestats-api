@@ -1,8 +1,6 @@
 package ch.keilestats.api.application.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,16 +19,20 @@ public class Goal {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long goalId;
+	private Long goalId;
+	
 	@ManyToOne
-	@JoinColumn(name = "gameId")
+	@JoinColumn(name = "GAME_ID")
 	private Game game;
+	
 	@ManyToOne
 	@JsonManagedReference(value = "player-goalScorer")
 	private Player goalScorer;
+	
 	@ManyToOne
 	@JsonManagedReference(value = "player-firstAssistant")
 	private Player firstAssistant;
+	
 	@ManyToOne
 	@JsonManagedReference(value = "player-secondAssistant")
 	private Player secondAssistant;
@@ -40,20 +42,20 @@ public class Goal {
 
 	public Goal(Player scorer) {
 		
-		this.goalScorer = scorer;
+		this.setGoalScorer(scorer);
 	}
 	
 	public Goal(Player scorer, Player assist1) {
 		
-		this.goalScorer = scorer;
-		this.firstAssistant = assist1;
+		this.setGoalScorer(scorer);
+		this.setFirstAssistant(assist1);
 	}
 	
 	public Goal(Player scorer, Player assist1, Player assist2) {
 	
-		this.goalScorer = scorer;
-		this.firstAssistant = assist1;
-		this.secondAssistant = assist2;
+		this.setGoalScorer(scorer);
+		this.setFirstAssistant(assist1);
+		this.setSecondAssistant(assist2);
 	}
 
 
@@ -79,22 +81,25 @@ public class Goal {
 
 	public void setGoalScorer(Player scorer) {
 		this.goalScorer = scorer;
+		scorer.addGoal(this);
 	}
 
 	public Player getFirstAssistant() {
 		return firstAssistant;
 	}
 
-	public void setFirstAssistant(Player assist1) {
-		this.firstAssistant = assist1;
+	public void setFirstAssistant(Player assistant1) {
+		this.firstAssistant = assistant1;
+		assistant1.addGoal(this);
 	}
 
 	public Player getSecondAssistant() {
 		return secondAssistant;
 	}
 
-	public void setSecondAssistant(Player assist2) {
-		this.secondAssistant = assist2;
+	public void setSecondAssistant(Player assistant2) {
+		this.secondAssistant = assistant2;
+		assistant2.addGoal(this);
 	}
 
 	@Override

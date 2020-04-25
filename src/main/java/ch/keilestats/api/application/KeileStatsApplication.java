@@ -1,7 +1,7 @@
 package ch.keilestats.api.application;
 
-
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,45 +9,65 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import ch.keilestats.api.application.entities.Opponent;
 import ch.keilestats.api.application.entities.Player;
 import ch.keilestats.api.application.repositories.PlayerRepository;
 
-/* @SpringBootApplication: Indicates a configuration class that declares one or more @Bean methods and also 
+/* Annotation @SpringBootApplication: Indicates a configuration class that declares one or more @Bean methods and also 
  * triggers auto-configuration, component scanning, and configuration properties scanning. 
  * This is a convenience annotation that is equivalent to declaring @Configuration, 
  * @EnableAutoConfiguration, @ComponentScan.*/
 @SpringBootApplication
+/* Class SpringApplication bootstraps the Application: 
+ * -creates an ApplicationContext instance
+ * -registers a CommandLinePropertySource to expose command line arguments as spring properties
+ * -refresh application context, loading all singleton beans
+ * -Trigger Any command line runner beans */ 
 public class KeileStatsApplication implements CommandLineRunner{
  
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
+	/*Class used to create and store some Data*/
 	@Autowired
-	PlayerRepository repository;
+	PlayerRepository playerRepository;
 
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
 		
-		/* Class SpringApplication bootstraps the Application: 
-		 * -creates an ApplicationContext instance
-		 * -registers a CommandLinePropertySource to expose command line arguments as spring properties
-		 * -refresh application context, loading all singleton beans
-		 * -Trigger Any command line runner beans */ 
-		
+		setUpData();
 		SpringApplication.run(KeileStatsApplication.class, args);
 		System.out.println("Hello");		
 	}
 
-	public List<Player> findAllPlayerStats() {
-		List<Player> players = repository.findAll();
-		System.out.println(players.get(0).getLastname());
-		return players;
+	/*Create some Data for testing purpose and save in Database*/
+	public static void setUpData() {
+		
+		Player player1 = new Player("Wohlhauser", "Elmar", null, null, null, null, null, null, null, null);
+		Player player2 = new Player("Catillaz", "Andreas", null, null, null, null, null, null, null, null);
+		Player player3 = new Player("Oberholzer", "Frédéric", null, null, null, null, null, null, null, null);
+		
+		Opponent opponent1 = new Opponent("HC Gurmels Senioren", null);
+		
+		Game game1 = new Game();
+		
 		
 	}
+	
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 		 
+		//Code just for testing..
 		List<Player> results = findAllPlayerStats();
 		System.out.println(results.get(0).getLastname());
+	}
+	
+	//Method just for testing..
+	public List<Player> findAllPlayerStats() {
+		
+		List<Player> players = playerRepository.findAll();
+		System.out.println(players.get(0).getLastname());
+		return players;	
 	}
 }
 

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,21 +30,31 @@ public class Player {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long playerId;
+	private Long playerId;
+	
 	private String lastname;
+	
 	private String firstname;
+	
 	private String position;
+	
 	private String email;
+	
 	private String address;
+	
 	private String phone;
+	
 	@ManyToMany
 	private Set<Game> games = new HashSet<>();
-	@OneToMany(mappedBy = "goalScorer") //Join column, join table fehlen?..
+	
+	@OneToMany(mappedBy = "goalScorer")
 	@JsonBackReference(value = "player-goalScorer")
 	private Set<Goal> goalsScored = new HashSet<>();
+	
 	@OneToMany(mappedBy = "firstAssistant")
 	@JsonBackReference(value = "player-firstAssistant")
 	private Set<Goal> firstAssists = new HashSet<>();
+	
 	@OneToMany(mappedBy = "secondAssistant")
 	@JsonBackReference(value = "player-secondAssistant")
 	private Set<Goal> secondAssists = new HashSet<>();
@@ -58,20 +69,29 @@ public class Player {
 		this.firstname = firstname;
 	}
 	
+	public Player(String lastname, String firstname, String position, String email, String address, String phone) {
+		super();
+		this.setLastname(lastname);
+		this.setFirstname(firstname);
+		this.setPosition(position);
+		this.setEmail(email);
+		this.setAddress(address);
+		this.setPhone(phone);
+	}
 
 	public Player(String lastname, String firstname, String position, String email, String address, String phone,
 			Set<Game> games, Set<Goal> goalsScored, Set<Goal> firstAssists, Set<Goal> secondAssists) {
 		super();
-		this.lastname = lastname;
-		this.firstname = firstname;
-		this.position = position;
-		this.email = email;
-		this.address = address;
-		this.phone = phone;
-		this.games = games;
-		this.goalsScored = goalsScored;
-		this.firstAssists = firstAssists;
-		this.secondAssists = secondAssists;
+		this.setLastname(lastname);
+		this.setFirstname(firstname);
+		this.setPosition(position);
+		this.setEmail(email);
+		this.setAddress(address);
+		this.setPhone(phone);
+		this.setGames(games);
+		this.setGoalsScored(goalsScored);
+		this.setFirstAssists(firstAssists);
+		this.setSecondAssists(secondAssists);
 	}
 
 	public long getPlayerId() {
@@ -135,7 +155,7 @@ public class Player {
 	}
 	
 	public void setGames(Set<Game> games) {
-		this.games = games;
+		for (Game g : games) addGame(g);
 	}
 
 	public void addGame(Game game) {
@@ -155,7 +175,7 @@ public class Player {
 	}
 	
 	public void setGoalsScored(Set<Goal> goalsScored) {
-		this.goalsScored = goalsScored;
+		for (Goal g : goalsScored) addGoal(g);
 	}
 
 	public void addGoal(Goal goal) {
@@ -175,7 +195,7 @@ public class Player {
 	}
 	
 	public void setFirstAssists(Set<Goal> firstAssists) {
-		this.firstAssists = firstAssists; 
+		for (Goal g : firstAssists) addFirstAssists(g);
 	}
 
 	public void addFirstAssists(Goal goal) {
@@ -195,10 +215,14 @@ public class Player {
 	}
 	
 	public void setSecondAssists(Set<Goal> secondAssists) {
-		this.secondAssists = secondAssists;
+		for (Goal g : secondAssists) addSecondAssists(g);
 	}
 
 	public void addSecondAssists(Goal goal) {
+		
+		if(goal == null)
+			throw new IllegalArgumentException("Null Goal");
+		
 		this.secondAssists.add(goal);
 		goal.setSecondAssistant(this);
 	}
