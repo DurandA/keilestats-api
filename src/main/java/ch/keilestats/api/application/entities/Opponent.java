@@ -41,7 +41,7 @@ public class Opponent {
 		return opponentId;
 	}
 
-	public void setOpponentId(long id) {
+	public void setOpponentId(Long id) {
 		this.opponentId = id;
 	}
 	

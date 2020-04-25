@@ -1,5 +1,6 @@
 package ch.keilestats.api.application;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -10,6 +11,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import ch.keilestats.api.application.entities.Game;
+import ch.keilestats.api.application.entities.Goal;
 import ch.keilestats.api.application.entities.Opponent;
 import ch.keilestats.api.application.entities.Player;
 import ch.keilestats.api.application.repositories.PlayerRepository;
@@ -47,6 +50,17 @@ public class KeileStatsApplication implements CommandLineRunner{
 		Player player3 = new Player("Oberholzer", "Frédéric", null, null, null, null, null, null, null, null);
 		
 		Opponent opponent1 = new Opponent("HC Gurmels Senioren", null);
+		Opponent opponent2 = new Opponent("HC Tiletz", null);
+		
+		Goal goal1 = new Goal(player1, player2, player3);
+		Goal goal2 = new Goal(player2, player1);
+		Goal goal3 = new Goal(player1);
+		
+		Set<Goal> goalsKeileGame1 = new HashSet<>();
+		
+		goalsKeileGame1.add(goal1);
+		goalsKeileGame1.add(goal2);
+		goalsKeileGame1.add(goal3);
 		
 		Game game1 = new Game();
 		

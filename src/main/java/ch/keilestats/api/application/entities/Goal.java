@@ -1,5 +1,6 @@
 package ch.keilestats.api.application.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.engine.spi.CascadeStyle;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,19 +23,22 @@ public class Goal {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long goalId;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "GAME_ID")
 	private Game game;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "SCORER_ID")
 	@JsonManagedReference(value = "player-goalScorer")
 	private Player goalScorer;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ASSISTANT1_ID")
 	@JsonManagedReference(value = "player-firstAssistant")
 	private Player firstAssistant;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ASSISTANT2_ID")
 	@JsonManagedReference(value = "player-secondAssistant")
 	private Player secondAssistant;
 
@@ -63,7 +68,7 @@ public class Goal {
 		return goalId;
 	}
 
-	public void setGoalId(long id) {
+	public void setGoalId(Long id) {
 		this.goalId = id;
 	}
 

@@ -65,8 +65,8 @@ public class Player {
 
 	public Player(String lastname, String firstname) {
 
-		this.lastname = lastname;
-		this.firstname = firstname;
+		this.setLastname(lastname);
+		this.setFirstname(firstname);
 	}
 	
 	public Player(String lastname, String firstname, String position, String email, String address, String phone) {
@@ -98,7 +98,7 @@ public class Player {
 		return playerId;
 	}
 
-	public void setPlayerId(long player_id) {
+	public void setPlayerId(Long player_id) {
 		this.playerId = player_id;
 	}
 

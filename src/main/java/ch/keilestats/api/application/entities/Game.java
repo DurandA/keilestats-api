@@ -37,9 +37,9 @@ public class Game {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "game", fetch = FetchType.LAZY)
 	private Set<Goal> goalsKeile = new HashSet<>();
 
-	private int nbGoalsKeile;
+	private Integer nbGoalsKeile;
 
-	private int goalsOpponent;
+	private Integer goalsOpponent;
 
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private Opponent opponent;
@@ -51,7 +51,7 @@ public class Game {
 	public Game() {
 	}
 
-	public Game(String gameDate, Set<Goal> goalsKeile, int nbGoalsKeile, int goalsOpponent, Opponent opponent,
+	public Game(String gameDate, Set<Goal> goalsKeile, Integer nbGoalsKeile, Integer goalsOpponent, Opponent opponent,
 			Set<Player> players) {
 		super();
 		this.setGameDate(gameDate);
@@ -66,7 +66,7 @@ public class Game {
 		return gameId;
 	}
 
-	public void setGameId(long id) {
+	public void setGameId(Long id) {
 		this.gameId = id;
 	}
 
