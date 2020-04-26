@@ -1,5 +1,7 @@
 package ch.keilestats.api.application.entities;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -32,7 +34,7 @@ public class Game {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long gameId;
 
-	private String gameDate;
+	private Date gameDate;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "game", fetch = FetchType.LAZY)
 	private Set<Goal> goalsKeile = new HashSet<>();
@@ -48,11 +50,13 @@ public class Game {
 	@JsonBackReference(value = "player-games")
 	private Set<Player> players = new HashSet<>();
 
+	SimpleDateFormat dateFormat = new SimpleDateFormat("dd.mm.yyyy");
+	
 	public Game() {
 	}
 
-	public Game(String gameDate, Set<Goal> goalsKeile, Integer nbGoalsKeile, Integer goalsOpponent, Opponent opponent,
-			Set<Player> players) {
+	public Game(String gameDate, Opponent opponent, Integer nbGoalsKeile,
+			Integer goalsOpponent, Set<Player> players, Set<Goal> goalsKeile) {
 		super();
 		this.setGameDate(gameDate);
 		this.setGoalsKeile(goalsKeile);
@@ -70,12 +74,17 @@ public class Game {
 		this.gameId = id;
 	}
 
-	public String getGameDate() {
+	public Date getGameDate() {
 		return gameDate;
 	}
 
 	public void setGameDate(String date) {
-		this.gameDate = date;
+		try {
+		this.gameDate = dateFormat.parse(date);
+		}
+		catch (ParseException e){
+			e.printStackTrace();
+		}
 	}
 
 	public Set<Goal> getGoalsKeile() {

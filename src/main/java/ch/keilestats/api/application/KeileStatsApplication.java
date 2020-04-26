@@ -1,5 +1,6 @@
 package ch.keilestats.api.application;
 
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +16,7 @@ import ch.keilestats.api.application.entities.Game;
 import ch.keilestats.api.application.entities.Goal;
 import ch.keilestats.api.application.entities.Opponent;
 import ch.keilestats.api.application.entities.Player;
+import ch.keilestats.api.application.repositories.GameRepository;
 import ch.keilestats.api.application.repositories.PlayerRepository;
 
 /* Annotation @SpringBootApplication: Indicates a configuration class that declares one or more @Bean methods and also 
@@ -33,55 +35,82 @@ public class KeileStatsApplication implements CommandLineRunner{
 	
 	/*Class used to create and store some Data*/
 	@Autowired
-	PlayerRepository playerRepository;
+	GameRepository gameRepository;
 
 	public static void main(String[] args) {
 		
-		setUpData();
 		SpringApplication.run(KeileStatsApplication.class, args);
 		System.out.println("Hello");		
 	}
-
-	/*Create some Data for testing purpose and save in Database*/
-	public static void setUpData() {
+	
+	@Override
+	public void run(String... args) throws Exception {
+		// TODO Auto-generated method stub
 		
+		Set<Game> gamesToSave = setUpData();
+		for (Game g : gamesToSave) gameRepository.save(g);
+	}
+	
+	/*Create some Data for testing purpose and save in Database*/
+	public Set<Game> setUpData() {
+		
+		Set<Game> gamesToSave = new HashSet<>();
+		
+		//create 3 Players
 		Player player1 = new Player("Wohlhauser", "Elmar", null, null, null, null, null, null, null, null);
 		Player player2 = new Player("Catillaz", "Andreas", null, null, null, null, null, null, null, null);
 		Player player3 = new Player("Oberholzer", "Frédéric", null, null, null, null, null, null, null, null);
 		
+		//Create 2 Opponents
 		Opponent opponent1 = new Opponent("HC Gurmels Senioren", null);
 		Opponent opponent2 = new Opponent("HC Tiletz", null);
 		
+		//Create Goals
 		Goal goal1 = new Goal(player1, player2, player3);
 		Goal goal2 = new Goal(player2, player1);
 		Goal goal3 = new Goal(player1);
 		
+		Goal goal4 = new Goal(player3, player1, player2);
+		Goal goal5 = new Goal(player2, player3, player1);
+		Goal goal6 = new Goal(player1);
+		Goal goal7 = new Goal(player1, player2, player3);
+		
+		//Assign Goals to 2 different Games
 		Set<Goal> goalsKeileGame1 = new HashSet<>();
 		
 		goalsKeileGame1.add(goal1);
 		goalsKeileGame1.add(goal2);
 		goalsKeileGame1.add(goal3);
 		
-		Game game1 = new Game();
+		Set<Goal> goalsKeileGame2 = new HashSet<>();
 		
+		goalsKeileGame2.add(goal4);
+		goalsKeileGame2.add(goal5);
+		goalsKeileGame2.add(goal6);
+		goalsKeileGame2.add(goal7);
 		
-	}
-	
-	@Override
-	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		 
-		//Code just for testing..
-		List<Player> results = findAllPlayerStats();
-		System.out.println(results.get(0).getLastname());
-	}
-	
-	//Method just for testing..
-	public List<Player> findAllPlayerStats() {
+		//Create List of Players for each game (both the same)
+		Set<Player> playerKeileGame1 = new HashSet<>();
 		
-		List<Player> players = playerRepository.findAll();
-		System.out.println(players.get(0).getLastname());
-		return players;	
+		playerKeileGame1.add(player1);
+		playerKeileGame1.add(player2);
+		playerKeileGame1.add(player3);
+		
+		Set<Player> playerKeileGame2 = new HashSet<>();
+		
+		playerKeileGame2.add(player1);
+		playerKeileGame2.add(player2);
+		playerKeileGame2.add(player3);
+		
+		//Create 2 Games
+		Game game1 = new Game("15.10.2017", opponent1, 3, 2, playerKeileGame1, goalsKeileGame1);
+		Game game2 = new Game("07.11.2018", opponent2, 4, 1, playerKeileGame2, goalsKeileGame2);
+		
+		//Put Games to return Set to save in Database and return it
+		gamesToSave.add(game1);
+		gamesToSave.add(game2);
+		
+		return gamesToSave;
 	}
 }
 
@@ -101,13 +130,6 @@ An ApplicationContext provides:
 In addition to standard BeanFactory lifecycle capabilities, ApplicationContext implementations 
 detect and invoke ApplicationContextAware beans as well as ResourceLoaderAware, 
 ApplicationEventPublisherAware and MessageSourceAware beans.	
-		
-//		List<Long> games = null;
-//		Player player = new Player(1, "Bykov", "Andrey", "Center", "Charmettes", "12345", "a.bykov@gotteron.ch", "", games);
-//		System.out.println("\n Player created..");
-//		
-//	playerRepository.save(player);
-// System.out.println("\n Player saved..");
-*/
+		*/
 
  
