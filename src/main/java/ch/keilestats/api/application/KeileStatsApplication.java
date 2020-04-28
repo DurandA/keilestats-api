@@ -85,7 +85,9 @@ public class KeileStatsApplication implements CommandLineRunner{
 		playerKeileGame2.add(player3);
 		
 		//save players to the database
-		playerRepository.saveAll(playerKeileGame1);
+		playerRepository.save(player1);
+		playerRepository.save(player2);
+		playerRepository.save(player3);
 		
 		//Create 2 Opponents
 		Opponent opponent1 = new Opponent((long) 1, "HC Gurmels Senioren");
@@ -93,15 +95,14 @@ public class KeileStatsApplication implements CommandLineRunner{
 		
 		//Save Opponents to the database
 		
-		Set<Opponent> opponents = new HashSet<>();
-		opponentRepository.saveAll(opponents);
+		opponentRepository.save(opponent1);
+		opponentRepository.save(opponent2);
 		
 		
 		//Create Goals
 		Goal goal1 = new Goal((long) 1, player1, player2, player3);
 		Goal goal2 = new Goal((long) 2, player2, player1);
 		Goal goal3 = new Goal((long) 3, player1);
-		
 		Goal goal4 = new Goal((long) 4, player3, player1, player2);
 		Goal goal5 = new Goal((long) 5, player2, player3, player1);
 		Goal goal6 = new Goal((long) 6, player1);
@@ -122,8 +123,14 @@ public class KeileStatsApplication implements CommandLineRunner{
 		goalsKeileGame2.add(goal7);
 		
 		//Save Goals to the database
-		goalRepository.saveAll(goalsKeileGame1);
-		goalRepository.saveAll(goalsKeileGame2);
+		goalRepository.save(goal1);
+		goalRepository.save(goal2);
+		goalRepository.save(goal3);
+		goalRepository.save(goal4);
+		goalRepository.save(goal5);
+		goalRepository.save(goal6);
+		goalRepository.save(goal7);
+	
 		
 		//Create 2 Games
 		Game game1 = new Game((long) 1, "15.10.2017", opponent1, 3, 2, playerKeileGame1, goalsKeileGame1);
@@ -135,7 +142,7 @@ public class KeileStatsApplication implements CommandLineRunner{
 		gamesToSave.add(game1);
 		gamesToSave.add(game2);
 		
-		gameRepository.saveAll(gamesToSave);
+		//gameRepository.saveAll(gamesToSave);
 		
 		return gamesToSave;
 	}

@@ -43,11 +43,11 @@ public class Game {
 
 	private Integer nbGoalsOpponent;
 
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
 	@JoinColumn(name = "OPPONENT_ID")
 	private Opponent opponentId;
 
-	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
 	@JoinTable(name = "player_game",
     	joinColumns = @JoinColumn(name = "game_id"),
     	inverseJoinColumns = @JoinColumn(name = "player_id"))

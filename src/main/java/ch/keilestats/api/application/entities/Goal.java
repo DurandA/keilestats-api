@@ -23,20 +23,20 @@ public class Goal {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long goalId;
 	
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name = "GAME_ID")
 	private Game gameId;
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name = "SCORER_ID")
 	//@JsonManagedReference(value = "player-goalScorer")
 	private Player goalScorer;
 	
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name = "ASSISTANT1_ID")
 	//@JsonManagedReference(value = "player-firstAssistant")
 	private Player firstAssistant;
 	
-	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@ManyToOne(cascade = {CascadeType.MERGE})
 	@JoinColumn(name = "ASSISTANT2_ID")
 	//@JsonManagedReference(value = "player-secondAssistant")
 	private Player secondAssistant;
