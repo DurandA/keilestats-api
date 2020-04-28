@@ -21,9 +21,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-/*
- * Nur "Player" machen und im "Player Repository, die methode, die nur den namen zurückgibt "returnNameOnly, so etwas)
- * */
 @Entity
 @Table
 public class Player {
