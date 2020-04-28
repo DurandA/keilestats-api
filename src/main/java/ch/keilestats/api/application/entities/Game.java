@@ -36,18 +36,18 @@ public class Game {
 
 	private Date gameDate;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "gameId")
+	@OneToMany(mappedBy = "gameId")
 	private Set<Goal> goalsKeile = new HashSet<>();
 
 	private Integer nbGoalsKeile;
 
 	private Integer nbGoalsOpponent;
 
-	@ManyToOne(cascade = CascadeType.MERGE)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "OPPONENT_ID")
 	private Opponent opponentId;
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinTable(name = "player_game",
     	joinColumns = @JoinColumn(name = "game_id"),
     	inverseJoinColumns = @JoinColumn(name = "player_id"))

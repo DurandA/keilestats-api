@@ -45,15 +45,15 @@ public class Player {
 	private Set<Game> games = new HashSet<>();
 	
 	@OneToMany(mappedBy = "goalScorer")
-	@JsonBackReference(value = "player-goalScorer")
+	//@JsonBackReference(value = "player-goalScorer")
 	private Set<Goal> goalsScored = new HashSet<>();
 	
 	@OneToMany(mappedBy = "firstAssistant")
-	@JsonBackReference(value = "player-firstAssistant")
+	//@JsonBackReference(value = "player-firstAssistant")
 	private Set<Goal> firstAssists = new HashSet<>();
 	
 	@OneToMany(mappedBy = "secondAssistant")
-	@JsonBackReference(value = "player-secondAssistant")
+	//@JsonBackReference(value = "player-secondAssistant")
 	private Set<Goal> secondAssists = new HashSet<>();
 
 	// void constructor needed by Spring boot

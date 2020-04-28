@@ -23,22 +23,22 @@ public class Goal {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long goalId;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "GAME_ID")
 	private Game gameId;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "SCORER_ID")
-	@JsonManagedReference(value = "player-goalScorer")
+	//@JsonManagedReference(value = "player-goalScorer")
 	private Player goalScorer;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "ASSISTANT1_ID")
-	@JsonManagedReference(value = "player-firstAssistant")
+	//@JsonManagedReference(value = "player-firstAssistant")
 	private Player firstAssistant;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "ASSISTANT2_ID")
-	@JsonManagedReference(value = "player-secondAssistant")
+	//@JsonManagedReference(value = "player-secondAssistant")
 	private Player secondAssistant;
 
 	//Empty Constructor needed by Spring Boot for dependency injection and Hibernate

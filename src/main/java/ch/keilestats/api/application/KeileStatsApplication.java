@@ -17,6 +17,8 @@ import ch.keilestats.api.application.entities.Goal;
 import ch.keilestats.api.application.entities.Opponent;
 import ch.keilestats.api.application.entities.Player;
 import ch.keilestats.api.application.repositories.GameRepository;
+import ch.keilestats.api.application.repositories.GoalRepository;
+import ch.keilestats.api.application.repositories.OpponentRepository;
 import ch.keilestats.api.application.repositories.PlayerRepository;
 
 /* Annotation @SpringBootApplication: Indicates a configuration class that declares one or more @Bean methods and also 
@@ -36,6 +38,15 @@ public class KeileStatsApplication implements CommandLineRunner{
 	/*Class used to create and store some Data*/
 	@Autowired
 	GameRepository gameRepository;
+	
+	@Autowired
+	PlayerRepository playerRepository;
+	
+	@Autowired
+	OpponentRepository opponentRepository;
+	
+	@Autowired
+	GoalRepository goalRepository;
 
 	public static void main(String[] args) {
 		
@@ -48,23 +59,43 @@ public class KeileStatsApplication implements CommandLineRunner{
 		// TODO Auto-generated method stub
 		
 		setUpData();
-	
 	}
 	
 	
 	/*Create some Data for testing purpose and save in Database*/
 	public Set<Game> setUpData() {
 		
-		Set<Game> gamesToSave = new HashSet<>();
 		
-		//create 3 Players
+		//create and 3 Players
 		Player player1 = new Player((long) 1, "Wohlhauser", "Elmar");
 		Player player2 = new Player((long) 2, "Catillaz", "Andreas");
 		Player player3 = new Player((long) 3, "Oberholzer", "Frédéric");
 		
+		//Create Set of Players that played each game (both the same here) 
+		Set<Player> playerKeileGame1 = new HashSet<>();
+		
+		playerKeileGame1.add(player1);
+		playerKeileGame1.add(player2);
+		playerKeileGame1.add(player3);
+		
+		Set<Player> playerKeileGame2 = new HashSet<>();
+		
+		playerKeileGame2.add(player1);
+		playerKeileGame2.add(player2);
+		playerKeileGame2.add(player3);
+		
+		//save players to the database
+		playerRepository.saveAll(playerKeileGame1);
+		
 		//Create 2 Opponents
 		Opponent opponent1 = new Opponent((long) 1, "HC Gurmels Senioren");
 		Opponent opponent2 = new Opponent((long) 2, "HC Tiletz");
+		
+		//Save Opponents to the database
+		
+		Set<Opponent> opponents = new HashSet<>();
+		opponentRepository.saveAll(opponents);
+		
 		
 		//Create Goals
 		Goal goal1 = new Goal((long) 1, player1, player2, player3);
@@ -90,28 +121,21 @@ public class KeileStatsApplication implements CommandLineRunner{
 		goalsKeileGame2.add(goal6);
 		goalsKeileGame2.add(goal7);
 		
-		//Create List of Players for each game (both the same)
-		Set<Player> playerKeileGame1 = new HashSet<>();
-		
-		playerKeileGame1.add(player1);
-		playerKeileGame1.add(player2);
-		playerKeileGame1.add(player3);
-		
-		Set<Player> playerKeileGame2 = new HashSet<>();
-		
-		playerKeileGame2.add(player1);
-		playerKeileGame2.add(player2);
-		playerKeileGame2.add(player3);
+		//Save Goals to the database
+		goalRepository.saveAll(goalsKeileGame1);
+		goalRepository.saveAll(goalsKeileGame2);
 		
 		//Create 2 Games
 		Game game1 = new Game((long) 1, "15.10.2017", opponent1, 3, 2, playerKeileGame1, goalsKeileGame1);
 		Game game2 = new Game((long) 2, "07.11.2018", opponent2, 4, 1, playerKeileGame2, goalsKeileGame2);
 		
 		//Put Games to return Set to save in Database and return it
+		Set<Game> gamesToSave = new HashSet<>();
+		
 		gamesToSave.add(game1);
 		gamesToSave.add(game2);
 		
-		for (Game g : gamesToSave) gameRepository.save(g);
+		gameRepository.saveAll(gamesToSave);
 		
 		return gamesToSave;
 	}
