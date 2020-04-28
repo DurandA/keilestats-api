@@ -25,11 +25,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  * Nur "Player" machen und im "Player Repository, die methode, die nur den namen zurückgibt "returnNameOnly, so etwas)
  * */
 @Entity
-@Table(name = "Player")
+@Table
 public class Player {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long playerId;
 	
 	private String lastname;
@@ -63,14 +63,16 @@ public class Player {
 	public Player() {
 	}
 
-	public Player(String lastname, String firstname) {
+	public Player(Long id, String lastname, String firstname) {
 
+		this.setPlayerId(id);
 		this.setLastname(lastname);
 		this.setFirstname(firstname);
 	}
 	
-	public Player(String lastname, String firstname, String position, String email, String address, String phone) {
+	public Player(Long id, String lastname, String firstname, String position, String email, String address, String phone) {
 		super();
+		this.setPlayerId(id);
 		this.setLastname(lastname);
 		this.setFirstname(firstname);
 		this.setPosition(position);
@@ -79,9 +81,10 @@ public class Player {
 		this.setPhone(phone);
 	}
 
-	public Player(String lastname, String firstname, String position, String email, String address, String phone,
+	public Player(Long id, String lastname, String firstname, String position, String email, String address, String phone,
 			Set<Game> games, Set<Goal> goalsScored, Set<Goal> firstAssists, Set<Goal> secondAssists) {
 		super();
+		this.setPlayerId(id);
 		this.setLastname(lastname);
 		this.setFirstname(firstname);
 		this.setPosition(position);
@@ -182,7 +185,6 @@ public class Player {
 		if (goal == null)
 			throw new IllegalArgumentException("Null Goal");
 		this.goalsScored.add(goal);
-		goal.setGoalScorer(this);
 	}
 
 	public void removeGoal(Goal goal) {
@@ -202,7 +204,6 @@ public class Player {
 		if(goal == null)
 			throw new IllegalArgumentException("Null Goal");
 		this.firstAssists.add(goal);
-		goal.setFirstAssistant(this);
 	}
 
 	public void removeFirstAssists(Goal goal) {
@@ -224,7 +225,6 @@ public class Player {
 			throw new IllegalArgumentException("Null Goal");
 		
 		this.secondAssists.add(goal);
-		goal.setSecondAssistant(this);
 	}
 
 	public void removeSecondAssists(Goal goal) {

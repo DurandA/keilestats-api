@@ -16,17 +16,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "Goal")
+@Table
 public class Goal {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long goalId;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "GAME_ID")
-	private Game game;
-	
+	private Game gameId;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "SCORER_ID")
 	@JsonManagedReference(value = "player-goalScorer")
@@ -45,19 +44,22 @@ public class Goal {
 	//Empty Constructor needed by Spring Boot for dependency injection and Hibernate
 	public Goal() {};
 
-	public Goal(Player scorer) {
+	public Goal(Long id, Player scorer) {
 		
+		this.setGoalId(id);
 		this.setGoalScorer(scorer);
 	}
 	
-	public Goal(Player scorer, Player assist1) {
+	public Goal(Long id, Player scorer, Player assist1) {
 		
+		this.setGoalId(id);
 		this.setGoalScorer(scorer);
 		this.setFirstAssistant(assist1);
 	}
 	
-	public Goal(Player scorer, Player assist1, Player assist2) {
+	public Goal(Long id, Player scorer, Player assist1, Player assist2) {
 	
+		this.setGoalId(id);
 		this.setGoalScorer(scorer);
 		this.setFirstAssistant(assist1);
 		this.setSecondAssistant(assist2);
@@ -73,11 +75,11 @@ public class Goal {
 	}
 
 	public Game getGame() {
-		return game;
+		return gameId;
 	}
 
 	public void setGame(Game game) {
-		this.game = game;
+		this.gameId = game;
 	}
 
 	public Player getGoalScorer() {
@@ -109,7 +111,7 @@ public class Goal {
 
 	@Override
 	public String toString() {
-		return "Goal [goalId=" + goalId + ", game=" + game + ", scorer=" + goalScorer + ", assist1="
+		return "Goal [goalId=" + goalId + ", game=" + gameId + ", scorer=" + goalScorer + ", assist1="
 				+ firstAssistant + ", assist2=" + secondAssistant + "]";
 	}
 

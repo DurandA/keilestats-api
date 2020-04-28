@@ -15,23 +15,31 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "Opponent")
+@Table
 public class Opponent {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long opponentId;
 	
 	private String opponentName;
 	
-	@OneToMany(mappedBy="opponent")
+	@OneToMany(mappedBy="opponentId")
 	//@JsonIgnore
 	private Set<Game> games = new HashSet<>();
 
 	//Void constructor needed by Spring Boot
 	public Opponent(){}
 	
-	public Opponent(String name, Set<Game> games) {
+	public Opponent(Long id, String name) {
+		
+		this.setOpponentId(id);
+		this.setOpponentName(name);
+	}
+	
+	public Opponent(Long id, String name, Set<Game> games) {
+		
+		this.setOpponentId(id);
 		this.setOpponentName(name);
 		this.setGames(games);
 	}
@@ -66,12 +74,12 @@ public class Opponent {
 		if (game == null)
 			throw new IllegalArgumentException("Null Game");
 		this.games.add(game);
-		game.setOpponent(this);
+		game.setOpponentId(this);
 	}
 	
 	public void removeGame(Game game) {
 		this.games.remove(game);
-		game.setOpponent(null);
+		game.setOpponentId(null);
 	}
 
 	@Override

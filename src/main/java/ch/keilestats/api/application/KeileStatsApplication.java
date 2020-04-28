@@ -47,9 +47,10 @@ public class KeileStatsApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 		
-		Set<Game> gamesToSave = setUpData();
-		for (Game g : gamesToSave) gameRepository.save(g);
+		setUpData();
+	
 	}
+	
 	
 	/*Create some Data for testing purpose and save in Database*/
 	public Set<Game> setUpData() {
@@ -57,23 +58,23 @@ public class KeileStatsApplication implements CommandLineRunner{
 		Set<Game> gamesToSave = new HashSet<>();
 		
 		//create 3 Players
-		Player player1 = new Player("Wohlhauser", "Elmar", null, null, null, null, null, null, null, null);
-		Player player2 = new Player("Catillaz", "Andreas", null, null, null, null, null, null, null, null);
-		Player player3 = new Player("Oberholzer", "Frédéric", null, null, null, null, null, null, null, null);
+		Player player1 = new Player((long) 1, "Wohlhauser", "Elmar");
+		Player player2 = new Player((long) 2, "Catillaz", "Andreas");
+		Player player3 = new Player((long) 3, "Oberholzer", "Frédéric");
 		
 		//Create 2 Opponents
-		Opponent opponent1 = new Opponent("HC Gurmels Senioren", null);
-		Opponent opponent2 = new Opponent("HC Tiletz", null);
+		Opponent opponent1 = new Opponent((long) 1, "HC Gurmels Senioren");
+		Opponent opponent2 = new Opponent((long) 2, "HC Tiletz");
 		
 		//Create Goals
-		Goal goal1 = new Goal(player1, player2, player3);
-		Goal goal2 = new Goal(player2, player1);
-		Goal goal3 = new Goal(player1);
+		Goal goal1 = new Goal((long) 1, player1, player2, player3);
+		Goal goal2 = new Goal((long) 2, player2, player1);
+		Goal goal3 = new Goal((long) 3, player1);
 		
-		Goal goal4 = new Goal(player3, player1, player2);
-		Goal goal5 = new Goal(player2, player3, player1);
-		Goal goal6 = new Goal(player1);
-		Goal goal7 = new Goal(player1, player2, player3);
+		Goal goal4 = new Goal((long) 4, player3, player1, player2);
+		Goal goal5 = new Goal((long) 5, player2, player3, player1);
+		Goal goal6 = new Goal((long) 6, player1);
+		Goal goal7 = new Goal((long) 7, player1, player2, player3);
 		
 		//Assign Goals to 2 different Games
 		Set<Goal> goalsKeileGame1 = new HashSet<>();
@@ -103,12 +104,14 @@ public class KeileStatsApplication implements CommandLineRunner{
 		playerKeileGame2.add(player3);
 		
 		//Create 2 Games
-		Game game1 = new Game("15.10.2017", opponent1, 3, 2, playerKeileGame1, goalsKeileGame1);
-		Game game2 = new Game("07.11.2018", opponent2, 4, 1, playerKeileGame2, goalsKeileGame2);
+		Game game1 = new Game((long) 1, "15.10.2017", opponent1, 3, 2, playerKeileGame1, goalsKeileGame1);
+		Game game2 = new Game((long) 2, "07.11.2018", opponent2, 4, 1, playerKeileGame2, goalsKeileGame2);
 		
 		//Put Games to return Set to save in Database and return it
 		gamesToSave.add(game1);
 		gamesToSave.add(game2);
+		
+		for (Game g : gamesToSave) gameRepository.save(g);
 		
 		return gamesToSave;
 	}

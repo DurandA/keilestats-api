@@ -27,42 +27,44 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "Game")
+@Table
 public class Game {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long gameId;
 
 	private Date gameDate;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "game", fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "gameId")
 	private Set<Goal> goalsKeile = new HashSet<>();
 
 	private Integer nbGoalsKeile;
 
-	private Integer goalsOpponent;
+	private Integer nbGoalsOpponent;
 
 	@ManyToOne(cascade = CascadeType.MERGE)
-	private Opponent opponent;
+	@JoinColumn(name = "OPPONENT_ID")
+	private Opponent opponentId;
 
-	@ManyToMany(mappedBy = "games", cascade = CascadeType.ALL)
-	@JsonBackReference(value = "player-games")
+	@ManyToMany(cascade = CascadeType.ALL)
 	private Set<Player> players = new HashSet<>();
 
-	SimpleDateFormat dateFormat = new SimpleDateFormat("dd.mm.yyyy");
+	
+	//SimpleDateFormat dateFormat = new SimpleDateFormat("dd.mm.yyyy");
 	
 	public Game() {
 	}
 
-	public Game(String gameDate, Opponent opponent, Integer nbGoalsKeile,
+	public Game(Long id, String gameDate, Opponent opponent, Integer nbGoalsKeile,
 			Integer goalsOpponent, Set<Player> players, Set<Goal> goalsKeile) {
 		super();
+		this.setGameId(id);
 		this.setGameDate(gameDate);
 		this.setGoalsKeile(goalsKeile);
 		this.setNbGoalsKeile(nbGoalsKeile);
-		this.setGoalsOpponent(goalsOpponent);
-		this.setOpponent(opponent);
+		this.setNbGoalsOpponent(goalsOpponent);
+		this.setOpponentId(opponent);
 		this.setPlayers(players);
 	}
 
@@ -80,7 +82,8 @@ public class Game {
 
 	public void setGameDate(String date) {
 		try {
-		this.gameDate = dateFormat.parse(date);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd.mm.yyyy");
+			this.gameDate = dateFormat.parse(date);
 		}
 		catch (ParseException e){
 			e.printStackTrace();
@@ -109,20 +112,20 @@ public class Game {
 		goal.setGame(null);
 	}
 
-	public int getGoalsOpponent() {
-		return goalsOpponent;
+	public int getNbGoalsOpponent() {
+		return nbGoalsOpponent;
 	}
 
-	public void setGoalsOpponent(int goalsOpponent) {
-		this.goalsOpponent = goalsOpponent;
+	public void setNbGoalsOpponent(int nbGoalsOpponent) {
+		this.nbGoalsOpponent = nbGoalsOpponent;
 	}
 
-	public Opponent getOpponent() {
-		return opponent;
+	public Opponent getOpponentId() {
+		return opponentId;
 	}
 
-	public void setOpponent(Opponent opponent) {
-		this.opponent = opponent;
+	public void setOpponentId(Opponent opponent) {
+		this.opponentId = opponent;
 	}
 
 	public Set<Player> getPlayers() {
@@ -156,6 +159,6 @@ public class Game {
 	public String toString() {
 		
 		return "Game [gameId=" + gameId + ", gameDate=" + gameDate + ", goals_keile=" + goalsKeile
-				+ ", goals_opponent=" + goalsOpponent + ", opponent=" + opponent + ", players=" + players + "]";
+				+ ", goals_opponent=" + nbGoalsOpponent + ", opponent=" + opponentId + ", players=" + players + "]";
 	}
 }
