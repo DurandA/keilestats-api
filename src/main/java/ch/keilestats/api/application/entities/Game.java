@@ -48,6 +48,9 @@ public class Game {
 	private Opponent opponentId;
 
 	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "player_game",
+    	joinColumns = @JoinColumn(name = "game_id"),
+    	inverseJoinColumns = @JoinColumn(name = "player_id"))
 	private Set<Player> players = new HashSet<>();
 
 	

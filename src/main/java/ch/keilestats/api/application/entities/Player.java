@@ -41,7 +41,7 @@ public class Player {
 	
 	private String phone;
 	
-	@ManyToMany
+	@ManyToMany(mappedBy = "players")
 	private Set<Game> games = new HashSet<>();
 	
 	@OneToMany(mappedBy = "goalScorer")
