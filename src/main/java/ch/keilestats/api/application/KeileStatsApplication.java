@@ -67,9 +67,9 @@ public class KeileStatsApplication implements CommandLineRunner{
 		
 		
 		//create and 3 Players
-		Player player1 = new Player((long) 1, "Wohlhauser", "Elmar");
-		Player player2 = new Player((long) 2, "Catillaz", "Andreas");
-		Player player3 = new Player((long) 3, "Oberholzer", "Frédéric");
+		Player player1 = new Player("Wohlhauser", "Elmar");
+		Player player2 = new Player("Catillaz", "Andreas");
+		Player player3 = new Player("Oberholzer", "Frédéric");
 		
 		//Create Set of Players that played each game (both the same here) 
 		Set<Player> playerKeileGame1 = new HashSet<>();

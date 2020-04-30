@@ -60,16 +60,16 @@ public class Player {
 	public Player() {
 	}
 
-	public Player(Long id, String lastname, String firstname) {
+	public Player(String lastname, String firstname) {
 
-		this.setPlayerId(id);
+		
 		this.setLastname(lastname);
 		this.setFirstname(firstname);
 	}
 	
-	public Player(Long id, String lastname, String firstname, String position, String email, String address, String phone) {
+	public Player(String lastname, String firstname, String position, String email, String address, String phone) {
 		super();
-		this.setPlayerId(id);
+		
 		this.setLastname(lastname);
 		this.setFirstname(firstname);
 		this.setPosition(position);
@@ -78,10 +78,10 @@ public class Player {
 		this.setPhone(phone);
 	}
 
-	public Player(Long id, String lastname, String firstname, String position, String email, String address, String phone,
+	public Player(String lastname, String firstname, String position, String email, String address, String phone,
 			Set<Game> games, Set<Goal> goalsScored, Set<Goal> firstAssists, Set<Goal> secondAssists) {
 		super();
-		this.setPlayerId(id);
+	
 		this.setLastname(lastname);
 		this.setFirstname(firstname);
 		this.setPosition(position);
