@@ -163,7 +163,7 @@ An ApplicationContext provides:
 
 In addition to standard BeanFactory lifecycle capabilities, ApplicationContext implementations 
 detect and invoke ApplicationContextAware beans as well as ResourceLoaderAware, 
-ApplicationEventPublisherAware and MessageSourceAware beans.	
+ApplicationEventPublisherAware and MessageSourceAware beans. A6-[6Eun
 		*/
 
  
