@@ -14,8 +14,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity
-@Table
+@Entity //Annotation that marks the Class to JPA as a persistent Entity
 public class Opponent {
 
 	@Id

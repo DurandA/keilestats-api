@@ -15,8 +15,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Entity
-@Table
+@Entity //Annotation that marks the Class to JPA as a persistent Entity
 public class Goal {
 
 	@Id
