@@ -71,8 +71,6 @@ public class PlayerController {
 		if (!playerOptional.isPresent())
 			return ResponseEntity.notFound().build();
 		
-		player.setPlayerId(id);
-		
 		playerRepository.save(player);
 		return ResponseEntity.noContent().build();
 	}

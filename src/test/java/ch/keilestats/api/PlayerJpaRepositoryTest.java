@@ -1,8 +1,6 @@
 package ch.keilestats.api;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ch.keilestats.api.application.repositories.PlayerRepository;

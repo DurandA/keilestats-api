@@ -56,19 +56,15 @@ public class Player {
 	private Set<Goal> secondAssists = new HashSet<>();
 
 	// void constructor needed by Spring boot
-	public Player() {
+	protected Player() {
 	}
 
 	public Player(String lastname, String firstname) {
-
-		
-		this.setLastname(lastname);
-		this.setFirstname(firstname);
+		this.lastname = lastname;
+		this.firstname = firstname;
 	}
 	
 	public Player(String lastname, String firstname, String position, String email, String address, String phone) {
-		super();
-		
 		this.setLastname(lastname);
 		this.setFirstname(firstname);
 		this.setPosition(position);
@@ -93,12 +89,8 @@ public class Player {
 		this.setSecondAssists(secondAssists);
 	}
 
-	public long getPlayerId() {
+	public Long getPlayerId() {
 		return playerId;
-	}
-
-	public void setPlayerId(Long player_id) {
-		this.playerId = player_id;
 	}
 
 	public String getLastname() {
