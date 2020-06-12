@@ -31,25 +31,24 @@ public class GameController {
 	@Autowired
 	private GameRepository gameRepository;
 
-	
-	
 	// Return list of all games
 	@GetMapping("/games")
 	public List<Game> getAllGames() {
 		return gameRepository.findAll();
 	}
 
-	// Returns a HTTP-Response Entity with the Game and Status "OK", if Game is present 
-	//and null and Status NOT FOUND, if not
+	// Returns a HTTP-Response Entity with the Game and Status "OK", if Game is
+	// present
+	// and null and Status NOT FOUND, if not
 	@GetMapping("/games/{gameId}")
 	public ResponseEntity<Game> getAllPlayerById(@PathVariable("gameId") Long gameId) {
 
 		Optional<Game> optionalGame = gameRepository.findById(gameId);
 		if (optionalGame.isPresent()) {
-			return new ResponseEntity<>(optionalGame.get(), HttpStatus.OK);	
+			return new ResponseEntity<>(optionalGame.get(), HttpStatus.OK);
 		}
 		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-			
+
 	}
 
 	@DeleteMapping("/games/{gameId}")
@@ -57,7 +56,8 @@ public class GameController {
 		gameRepository.deleteById(gameId);
 	}
 
-	// The Method returns a ResponseEntity with a header containing the URI of the created
+	// The Method returns a ResponseEntity with a header containing the URI of the
+	// created
 	// resource
 	@PostMapping(path = "/games", consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Object> addGame(Game game) {
@@ -69,7 +69,7 @@ public class GameController {
 
 		return ResponseEntity.created(location).build();
 	}
-	
+
 	// "ResponseEntity" used to return http-StatusCodes
 	@PutMapping("/games/{gameId}")
 	public ResponseEntity<Object> updateGame(Game game, @PathVariable("gameId") Long gameId) {

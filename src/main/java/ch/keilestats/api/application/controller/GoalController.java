@@ -32,7 +32,7 @@ import ch.keilestats.api.application.repositories.GoalRepository;
 @RequestMapping("/api")
 public class GoalController {
 
-	@Autowired // necessary annotation that the bean gets created by the application context
+	@Autowired // necessary annotation that the bean gets created automatically by the application context
 	private GoalRepository goalRepository;
 
 	// Return list of all goals
@@ -48,29 +48,33 @@ public class GoalController {
 		Optional<Goal> optionalGoal = goalRepository.findById(goalId);
 		if (optionalGoal.isPresent()) {
 			return new ResponseEntity<>(optionalGoal.get(), HttpStatus.OK);
-			}
+		}
 		return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 	}
 
-	/* Returning a ResponseEntity with a header containing the URL of the created
-	 resource. @RequestBody indicates that the Body of the Request should be bound to the Goal
-	 object, not some Header Parameters, it is important though */
+	/*
+	 * Returning a ResponseEntity with a header containing the URL of the created
+	 * resource. @RequestBody indicates that the Body of the Request should be bound
+	 * to the Goal object, not some Header Parameters, it is important though
+	 */
 	@PostMapping(path = "/goals")
-	@ResponseStatus(HttpStatus.CREATED) //Returns 201 "CREATED" instead of only 200, "OK"
+	@ResponseStatus(HttpStatus.CREATED) // Returns 201 "CREATED" instead of only 200, "OK"
 	public Goal addGoal(@RequestBody Goal goal) {
 		return goalRepository.save(goal);
 	}
-	
-	/*PATCH instead of PUT is used, because PATCH is intended for a partial update, 
-	 * PUT is intended for a complete update of the Resource*/
+
+	/*
+	 * PATCH instead of PUT is used, because PATCH is intended for a partial update,
+	 * PUT is intended for a complete update of the Resource
+	 */
 	@PatchMapping("/goals/{goalsId}")
 	public Goal updateGoal(@RequestBody Goal patch, @PathVariable("goalsId") Long goalId) {
 		Goal goal = goalRepository.findById(goalId).get();
-		
+
 		if (patch.getGame() != null) {
 			goal.setGame(patch.getGame());
 		}
-		if(patch.getGoalScorer() != null) {
+		if (patch.getGoalScorer() != null) {
 			goal.setGoalScorer(patch.getGoalScorer());
 		}
 		if (patch.getFirstAssistant() != null) {
@@ -81,12 +85,13 @@ public class GoalController {
 		}
 		return goalRepository.save(goal);
 	}
-	
+
 	@DeleteMapping("/goals/{goalId}")
-	@ResponseStatus(code=HttpStatus.NO_CONTENT)
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	public void deleteGoal(@PathVariable("goalId") Long goalId) {
 		try {
 			goalRepository.deleteById(goalId);
-		} catch (EmptyResultDataAccessException e) {}
+		} catch (EmptyResultDataAccessException e) {
+		}
 	}
 }

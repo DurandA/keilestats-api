@@ -16,9 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import ch.keilestats.api.application.entities.*;
 
-
-
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Long> {
-	
+
 }

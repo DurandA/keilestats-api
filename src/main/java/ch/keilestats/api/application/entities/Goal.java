@@ -15,55 +15,56 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Entity //Annotation that marks the Class to JPA as a persistent Entity
+@Entity // Annotation that marks the Class to JPA as a persistent Entity
 public class Goal {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long goalId;
-	
+
 	@ManyToOne()
 	@JoinColumn(name = "GAME_ID")
 	private Game gameId;
 	@ManyToOne()
 	@JoinColumn(name = "SCORER_ID")
-	//@JsonManagedReference(value = "player-goalScorer")
+	// @JsonManagedReference(value = "player-goalScorer")
 	private Player goalScorer;
-	
+
 	@ManyToOne()
 	@JoinColumn(name = "ASSISTANT1_ID")
-	//@JsonManagedReference(value = "player-firstAssistant")
+	// @JsonManagedReference(value = "player-firstAssistant")
 	private Player firstAssistant;
-	
+
 	@ManyToOne()
 	@JoinColumn(name = "ASSISTANT2_ID")
-	//@JsonManagedReference(value = "player-secondAssistant")
+	// @JsonManagedReference(value = "player-secondAssistant")
 	private Player secondAssistant;
 
-	//Empty Constructor needed by Spring Boot for dependency injection and Hibernate
-	public Goal() {};
+	// Empty Constructor needed by Spring Boot for dependency injection and
+	// Hibernate
+	public Goal() {
+	};
 
 	public Goal(Long id, Player scorer) {
-		
+
 		this.setGoalId(id);
 		this.setGoalScorer(scorer);
 	}
-	
+
 	public Goal(Long id, Player scorer, Player assist1) {
-		
+
 		this.setGoalId(id);
 		this.setGoalScorer(scorer);
 		this.setFirstAssistant(assist1);
 	}
-	
+
 	public Goal(Long id, Player scorer, Player assist1, Player assist2) {
-	
+
 		this.setGoalId(id);
 		this.setGoalScorer(scorer);
 		this.setFirstAssistant(assist1);
 		this.setSecondAssistant(assist2);
 	}
-
 
 	public long getGoalId() {
 		return goalId;
@@ -110,8 +111,8 @@ public class Goal {
 
 	@Override
 	public String toString() {
-		return "Goal [goalId=" + goalId + ", game=" + gameId + ", scorer=" + goalScorer + ", assist1="
-				+ firstAssistant + ", assist2=" + secondAssistant + "]";
+		return "Goal [goalId=" + goalId + ", game=" + gameId + ", scorer=" + goalScorer + ", assist1=" + firstAssistant
+				+ ", assist2=" + secondAssistant + "]";
 	}
 
 }

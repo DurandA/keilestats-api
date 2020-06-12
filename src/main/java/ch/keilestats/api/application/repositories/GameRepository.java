@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import ch.keilestats.api.application.entities.Game;
 
 @Repository
-public interface GameRepository extends JpaRepository<Game, Long>{
+public interface GameRepository extends JpaRepository<Game, Long> {
 
 }
