@@ -34,7 +34,7 @@ public class Game {
 	private Long gameId;
 
 	private Date gameDate;
-
+	
 	@OneToMany(mappedBy = "gameId")
 	private Set<Goal> goalsKeile = new HashSet<>();
 
@@ -87,6 +87,7 @@ public class Game {
 			e.printStackTrace();
 		}
 	}
+
 
 	public Set<Goal> getGoalsKeile() {
 		return goalsKeile;
@@ -161,7 +162,7 @@ public class Game {
 	@Override
 	public String toString() {
 
-		return "Game [gameId=" + gameId + ", gameDate=" + gameDate + ", goals_keile=" + goalsKeile + ", goals_opponent="
+		return "Game [gameId = " + gameId + ", gameDate = " + gameDate + ", goals_keile=" + goalsKeile + ", goals_opponent="
 				+ nbGoalsOpponent + ", opponent=" + opponentId + ", players=" + players + "]";
 	}
 }
