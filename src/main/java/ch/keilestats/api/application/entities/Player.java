@@ -21,38 +21,38 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Entity //Annotation that marks the Class to JPA as a persistent Entity
+@Entity // Annotation that marks the Class to JPA as a persistent Entity
 public class Player {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long playerId;
-	
+
 	private String lastname;
-	
+
 	private String firstname;
-	
+
 	private String position;
-	
+
 	private String email;
-	
+
 	private String address;
-	
+
 	private String phone;
-	
+
 	@ManyToMany(mappedBy = "players")
 	private Set<Game> games = new HashSet<>();
-	
+
 	@OneToMany(mappedBy = "goalScorer")
-	//@JsonBackReference(value = "player-goalScorer")
+	// @JsonBackReference(value = "player-goalScorer")
 	private Set<Goal> goalsScored = new HashSet<>();
-	
+
 	@OneToMany(mappedBy = "firstAssistant")
-	//@JsonBackReference(value = "player-firstAssistant")
+	// @JsonBackReference(value = "player-firstAssistant")
 	private Set<Goal> firstAssists = new HashSet<>();
-	
+
 	@OneToMany(mappedBy = "secondAssistant")
-	//@JsonBackReference(value = "player-secondAssistant")
+	// @JsonBackReference(value = "player-secondAssistant")
 	private Set<Goal> secondAssists = new HashSet<>();
 
 	// void constructor needed by Spring boot
@@ -60,11 +60,14 @@ public class Player {
 	}
 
 	public Player(String lastname, String firstname) {
+
 		this.lastname = lastname;
 		this.firstname = firstname;
+
 	}
-	
+
 	public Player(String lastname, String firstname, String position, String email, String address, String phone) {
+
 		this.setLastname(lastname);
 		this.setFirstname(firstname);
 		this.setPosition(position);
@@ -76,7 +79,7 @@ public class Player {
 	public Player(String lastname, String firstname, String position, String email, String address, String phone,
 			Set<Game> games, Set<Goal> goalsScored, Set<Goal> firstAssists, Set<Goal> secondAssists) {
 		super();
-	
+
 		this.setLastname(lastname);
 		this.setFirstname(firstname);
 		this.setPosition(position);
@@ -144,13 +147,14 @@ public class Player {
 	public Set<Game> getGames() {
 		return games;
 	}
-	
+
 	public void setGames(Set<Game> games) {
-		for (Game g : games) addGame(g);
+		for (Game g : games)
+			addGame(g);
 	}
 
 	public void addGame(Game game) {
-		if(game == null) 
+		if (game == null)
 			throw new IllegalArgumentException("Null Game");
 		this.games.add(game);
 		game.getPlayers().add(this);
@@ -164,9 +168,10 @@ public class Player {
 	public Set<Goal> getGoalsScored() {
 		return goalsScored;
 	}
-	
+
 	public void setGoalsScored(Set<Goal> goalsScored) {
-		for (Goal g : goalsScored) addGoal(g);
+		for (Goal g : goalsScored)
+			addGoal(g);
 	}
 
 	public void addGoal(Goal goal) {
@@ -183,13 +188,14 @@ public class Player {
 	public Set<Goal> getFirstAssists() {
 		return firstAssists;
 	}
-	
+
 	public void setFirstAssists(Set<Goal> firstAssists) {
-		for (Goal g : firstAssists) addFirstAssists(g);
+		for (Goal g : firstAssists)
+			addFirstAssists(g);
 	}
 
 	public void addFirstAssists(Goal goal) {
-		if(goal == null)
+		if (goal == null)
 			throw new IllegalArgumentException("Null Goal");
 		this.firstAssists.add(goal);
 	}
@@ -202,16 +208,17 @@ public class Player {
 	public Set<Goal> getSecondAssists() {
 		return secondAssists;
 	}
-	
+
 	public void setSecondAssists(Set<Goal> secondAssists) {
-		for (Goal g : secondAssists) addSecondAssists(g);
+		for (Goal g : secondAssists)
+			addSecondAssists(g);
 	}
 
 	public void addSecondAssists(Goal goal) {
-		
-		if(goal == null)
+
+		if (goal == null)
 			throw new IllegalArgumentException("Null Goal");
-		
+
 		this.secondAssists.add(goal);
 	}
 

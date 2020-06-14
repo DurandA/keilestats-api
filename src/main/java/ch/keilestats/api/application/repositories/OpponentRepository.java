@@ -7,6 +7,5 @@ import ch.keilestats.api.application.entities.*;
 
 @Repository
 public interface OpponentRepository extends JpaRepository<Opponent, Long> {
-	
-	
+
 }

@@ -2,9 +2,9 @@
 REST API for Statistics of a just-for-fun ice hockey team with Spring Boot.
 
 1. Import the project into your IDE as a Maven project
-2. All the dependecies should be imported automatically, if compile and build the pom.xml-file with Maven again.
+2. All the dependecies should be imported automatically, if not, compile and build the pom.xml-file with Maven again.
 3. To configure the connection to your database, open the "application.properties" file in the source/main/resources folder. There, you must change the url, username, password according to your database credentials
-4. For this project, a postgres database is used.
+4. For this project, a postgres database is used. (in developpment stage, a H2 in Memory Database may be sometimes used too).
 5. Launch the application by running the class KeileStatsApplication in folder 
 src/main/java
 6. To test the endpoints, got to http://localhost8080/swagger-ui.html (or your corresponding port number, where the application runs).

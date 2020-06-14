@@ -21,14 +21,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-@RestController /*tells spring that this is a component 
-and Responses should be written directly in the HTTP-Response-Body*/
+@RestController /*
+				 * tells spring that this is a component and Responses should be written
+				 * directly in the HTTP-Response-Body
+				 */
 @RequestMapping("/api") /* */
 @Transactional
 public class PlayerController {
 
-	
-	@Autowired /*Annotation to tell the Framework to inject the dependency*/
+	@Autowired /* Annotation to tell the Framework to inject the dependency */
 	private PlayerRepository playerRepository;
 
 	// Return list of all players
@@ -63,14 +64,13 @@ public class PlayerController {
 		return ResponseEntity.created(location).build();
 	}
 
-
 	@PutMapping("/players/{playerId}")
 	public ResponseEntity<Object> updatePlayer(Player player, @PathVariable("playerId") Long id) {
 		Optional<Player> playerOptional = playerRepository.findById(id);
-		
+
 		if (!playerOptional.isPresent())
 			return ResponseEntity.notFound().build();
-		
+
 		playerRepository.save(player);
 		return ResponseEntity.noContent().build();
 	}

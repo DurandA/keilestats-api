@@ -47,12 +47,12 @@ public class OpponentController {
 			throw new PropertyNotFoundException("id-" + opponentId);
 		return opponentOptional.get();
 	}
-	
+
 	@DeleteMapping("/opponents/{opponentId}")
 	public void deleteOpponent(@PathVariable("opponentId") Long opponentId) {
 		opponentRepository.deleteById(opponentId);
 	}
-	
+
 	@PostMapping(path = "/opponents")
 	public ResponseEntity<Object> addOpponent(Opponent opponent) {
 
@@ -63,16 +63,16 @@ public class OpponentController {
 
 		return ResponseEntity.created(location).build();
 	}
-	
+
 	@PutMapping(path = "/opponents/{opponentId}")
-	public ResponseEntity<Object> updateOpponent( Opponent opponent, @PathVariable("opponentId") Long opponentId) {
+	public ResponseEntity<Object> updateOpponent(Opponent opponent, @PathVariable("opponentId") Long opponentId) {
 		Optional<Opponent> opponentOptional = opponentRepository.findById(opponentId);
-		
+
 		if (!opponentOptional.isPresent())
 			return ResponseEntity.notFound().build();
-		
+
 		opponent.setOpponentId(opponentId);
-		
+
 		opponentRepository.save(opponent);
 		return ResponseEntity.noContent().build();
 	}
